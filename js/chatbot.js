@@ -6,8 +6,7 @@
 
 document.addEventListener("DOMContentLoaded", () => {
   // 1. configuration
-  const GEMINI_API_KEY = "AIzaSyCXFTtC8LLNa93TdBEV6hn912jWRXd_9Mc";
-  const GEMINI_API_URL = `https://generativelanguage.googleapis.com/v1/models/gemini-2.5-flash-lite:generateContent?key=${GEMINI_API_KEY}`;
+  const CHAT_API_URL = '/api/chat';
 
   // Knowledge Base context for the AI
   const MANOJ_CONTEXT = `
@@ -148,7 +147,7 @@ document.addEventListener("DOMContentLoaded", () => {
     chatHistory.push({ role: "user", parts: [{ text: userQuery }] });
 
     try {
-      const response = await fetch(GEMINI_API_URL, {
+      const response = await fetch(CHAT_API_URL, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ contents: chatHistory }),
