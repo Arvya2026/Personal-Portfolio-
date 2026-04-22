@@ -54,7 +54,7 @@ html {
 }
 
 .hero h1.vr {
-  font-size: 28vw;
+  font-size: 20vw;
   line-height: 1;
   letter-spacing: -0.5vw;
   left: 50%;
@@ -69,12 +69,12 @@ html {
 
 @media (max-width: 991.98px) {
   .hero h1.vr {
-    font-size: 30vw;
+    font-size: 25vw;
   }
 }
 @media (max-width: 575.98px) {
   .hero h1.vr {
-    font-size: 32vw;
+    font-size: 28vw;
   }
 }
 
@@ -636,5 +636,175 @@ html {
 
   .heading-section h2 {
     font-size: 40px !important;
+  }
+}
+
+/* ==========================================================================
+   14. PORTFOLIO GRID — uniform tiles, blur-reveal on hover
+   ========================================================================== */
+.ftco-portfolio-grid {
+  padding: 6em 0;
+}
+
+.ftco-portfolio-grid .work-tile {
+  display: block;
+  position: relative;
+  width: 100%;
+  padding-top: 100%; /* 1:1 square */
+  background-color: #f4f5f7; /* subtle frame behind images that don't fill 1:1 */
+  background-size: contain; /* show the full photo, no cropping */
+  background-position: center center;
+  background-repeat: no-repeat;
+  border-radius: 8px;
+  overflow: hidden;
+  text-decoration: none;
+  color: #fff;
+  box-shadow: 0 14px 36px rgba(17, 20, 24, 0.1);
+  transform: translateZ(0);
+  transition:
+    transform 0.5s cubic-bezier(0.2, 0.8, 0.2, 1),
+    box-shadow 0.5s cubic-bezier(0.2, 0.8, 0.2, 1);
+  will-change: transform;
+}
+
+.ftco-portfolio-grid .work-tile::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: inherit;
+  background-color: #f4f5f7;
+  background-size: contain;
+  background-position: center center;
+  background-repeat: no-repeat;
+  transition:
+    filter 0.6s cubic-bezier(0.2, 0.8, 0.2, 1),
+    transform 0.6s cubic-bezier(0.2, 0.8, 0.2, 1);
+  filter: blur(0) saturate(1);
+  transform: scale(1);
+  z-index: 0;
+}
+
+.ftco-portfolio-grid .work-tile:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 28px 60px rgba(17, 20, 24, 0.22);
+}
+
+.ftco-portfolio-grid .work-tile:hover::before {
+  filter: blur(6px) saturate(0.85);
+  transform: scale(1.06);
+}
+
+.ftco-portfolio-grid .work-tile-overlay {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 28px;
+  background: linear-gradient(
+    180deg,
+    rgba(12, 14, 20, 0) 0%,
+    rgba(12, 14, 20, 0) 40%,
+    rgba(12, 14, 20, 0.35) 100%
+  );
+  opacity: 1;
+  transition: background 0.5s ease;
+  z-index: 1;
+}
+
+.ftco-portfolio-grid .work-tile:hover .work-tile-overlay {
+  background: linear-gradient(
+    180deg,
+    rgba(12, 14, 20, 0.72) 0%,
+    rgba(12, 14, 20, 0.78) 100%
+  );
+}
+
+.ftco-portfolio-grid .work-tile-content {
+  text-align: center;
+  max-width: 100%;
+  transform: translateY(10px);
+  opacity: 0;
+  transition:
+    transform 0.5s cubic-bezier(0.2, 0.8, 0.2, 1) 0.05s,
+    opacity 0.45s ease 0.05s;
+  pointer-events: none;
+}
+
+.ftco-portfolio-grid .work-tile:hover .work-tile-content,
+.ftco-portfolio-grid .work-tile:focus-visible .work-tile-content {
+  transform: translateY(0);
+  opacity: 1;
+}
+
+.ftco-portfolio-grid .work-tile-sub {
+  display: inline-block;
+  font-size: 11px;
+  letter-spacing: 2.5px;
+  text-transform: uppercase;
+  color: var(--brand);
+  font-weight: 700;
+  margin-bottom: 12px;
+}
+
+.ftco-portfolio-grid .work-tile-title {
+  color: #fff;
+  font-size: 22px;
+  font-weight: 700;
+  line-height: 1.25;
+  margin: 0 0 12px;
+}
+
+.ftco-portfolio-grid .work-tile-desc {
+  color: rgba(255, 255, 255, 0.86);
+  font-size: 14px;
+  line-height: 1.6;
+  margin: 0 auto 16px;
+  max-width: 320px;
+}
+
+.ftco-portfolio-grid .work-tile-cta {
+  display: inline-block;
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  color: #fff;
+  padding-bottom: 4px;
+  border-bottom: 2px solid var(--brand);
+}
+
+/* Tablet: keep square, slightly tighter type */
+@media (max-width: 991.98px) {
+  .ftco-portfolio-grid .work-tile-title {
+    font-size: 20px;
+  }
+  .ftco-portfolio-grid .work-tile-desc {
+    font-size: 13px;
+  }
+}
+
+/* Mobile (no hover): show overlay permanently for readability, no blur */
+@media (max-width: 767.98px) {
+  .ftco-portfolio-grid {
+    padding: 4em 0;
+  }
+  .ftco-portfolio-grid .work-tile-overlay {
+    background: linear-gradient(
+      180deg,
+      rgba(12, 14, 20, 0.55) 0%,
+      rgba(12, 14, 20, 0.75) 100%
+    );
+  }
+  .ftco-portfolio-grid .work-tile-content {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Safari / older browsers without backdrop-filter still get the dark overlay */
+@supports not (filter: blur(1px)) {
+  .ftco-portfolio-grid .work-tile:hover::before {
+    filter: none;
   }
 }

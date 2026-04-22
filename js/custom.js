@@ -32,10 +32,10 @@
 
     var phrases = [
       'Agentic AI for Lawyers',
-      'Enclaraa — The Legal AI Platform',
-      'Secure, On-Prem RAG Pipelines',
-      'Enterprise AI at Arvya Tech',
-      'Purpose-Built AI that Ships'
+      'Enclaraa — Legal AI that Cites Itself',
+      'Secure, On-Prem RAG for Enterprise',
+      'Contract Review in Minutes, Not Hours',
+      'Enterprise AI that Actually Ships'
     ];
 
     var phraseIndex = 0;
