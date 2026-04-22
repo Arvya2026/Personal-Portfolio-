@@ -6,7 +6,8 @@
 
 document.addEventListener("DOMContentLoaded", () => {
   // 1. configuration
-  const CHAT_API_URL = '/api/chat';
+  // Secure backend endpoint (Vercel Serverless Function)
+  const GEMINI_API_URL = '/api/chat';
 
   // Knowledge Base context for the AI
   const MANOJ_CONTEXT = `
@@ -28,7 +29,7 @@ document.addEventListener("DOMContentLoaded", () => {
     - Refer to yourself as "Manoj's AI Assistant".
 
     GUARDRAILS:
-    - Stirictly swer to the 
+    - Stirictl
 
     `;
 
@@ -147,36 +148,17 @@ document.addEventListener("DOMContentLoaded", () => {
     chatHistory.push({ role: "user", parts: [{ text: userQuery }] });
 
     try {
-      const response = await fetch(CHAT_API_URL, {
+      const response = await fetch(GEMINI_API_URL, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ contents: chatHistory }),
       });
 
-      if (!response.ok) {
-        let isLocal = false;
-        const hostname = window.location.hostname;
-        // Expanded detection for local development (IPs, localhost, .local domains)
-        if (hostname === "localhost" || hostname === "127.0.0.1" || hostname.startsWith("192.168.") || hostname.startsWith("10.") || hostname.endsWith(".local") || window.location.protocol === "file:") {
-          isLocal = true;
-        }
-
-        if (isLocal && (response.status === 404 || response.status === 405)) {
-          throw new Error("Local Server detected. Your 'Live Server' cannot run this chatbot's backend. Please test the chatbot directly on your live Vercel website, or use the 'vercel dev' command in your terminal.");
-        }
-
-        let errorMsg = `Server error: ${response.status}`;
-        try {
-          const errorData = await response.json();
-          errorMsg = errorData.error || errorMsg;
-        } catch (e) {
-          // If response isn't JSON, just use the status code
-        }
-        throw new Error(errorMsg);
-      }
-      }
-
       const data = await response.json();
+
+      if (data.error) {
+        throw new Error(data.error.message);
+      }
 
       const modelResponse = data.candidates[0].content.parts[0].text;
 
