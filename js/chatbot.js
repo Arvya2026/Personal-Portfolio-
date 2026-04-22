@@ -28,9 +28,7 @@ document.addEventListener("DOMContentLoaded", () => {
     - If asked about contact info, point them to the contact page or his LinkedIn.
     - Refer to yourself as "Manoj's AI Assistant".
 
-    GUARDRAILS:
-    - Stirictl
-
+    
     `;
 
   // Initialize chat history with system instructions
