@@ -154,8 +154,9 @@ document.addEventListener("DOMContentLoaded", () => {
       });
 
       if (!response.ok) {
-        if (response.status === 404 && (window.location.hostname === "localhost" || window.location.hostname === "127.0.0.1")) {
-          throw new Error("Local environment detected. The chatbot requires 'vercel dev' to run API functions locally. Please test on your deployed Vercel site or use the Vercel CLI.");
+        const isLocal = window.location.hostname === "localhost" || window.location.hostname === "127.0.0.1";
+        if (isLocal && (response.status === 404 || response.status === 405)) {
+          throw new Error("Local environment detected. Your current local server (Live Server) cannot run API functions. To test the chatbot locally, please use the Vercel CLI with 'vercel dev', or simply test it on your live Vercel deployment.");
         }
         const errorData = await response.json().catch(() => ({}));
         throw new Error(errorData.error || `Server error: ${response.status}`);

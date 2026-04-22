@@ -1,0 +1,13 @@
+{
+  "name": "manoj-portfolio",
+  "version": "1.0.0",
+  "description": "Portfolio website for Manoj Kumar Thota",
+  "main": "index.html",
+  "scripts": {
+    "start": "servor"
+  },
+  "dependencies": {},
+  "engines": {
+    "node": ">=18.0.0"
+  }
+}
