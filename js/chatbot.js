@@ -153,11 +153,15 @@ document.addEventListener("DOMContentLoaded", () => {
         body: JSON.stringify({ contents: chatHistory }),
       });
 
-      const data = await response.json();
-
-      if (data.error) {
-        throw new Error(data.error.message);
+      if (!response.ok) {
+        if (response.status === 404 && (window.location.hostname === "localhost" || window.location.hostname === "127.0.0.1")) {
+          throw new Error("Local environment detected. The chatbot requires 'vercel dev' to run API functions locally. Please test on your deployed Vercel site or use the Vercel CLI.");
+        }
+        const errorData = await response.json().catch(() => ({}));
+        throw new Error(errorData.error || `Server error: ${response.status}`);
       }
+
+      const data = await response.json();
 
       const modelResponse = data.candidates[0].content.parts[0].text;
 
